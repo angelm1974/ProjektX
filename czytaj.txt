@@ -1,0 +1,12 @@
+W dniu dzisiejszym poznaliśmy podstawy języka react native
+Dodatkowe materiały do nauki:
+Środowisko deweloperskie
+https://reactnative.dev/docs/environment-setup
+EXPO
+https://docs.expo.dev/get-started/installation/
+
+KOmponenty
+https://reactnative.dev/docs/components-and-apis
+
+Layouty
+https://reactnative.dev/docs/flexbox

@@ -1,59 +1,97 @@
-
+// Description: Main file of the application
+//Sekcja importów
+//Importujemy biblioteki Reacta, komponenty z biblioteki React Native oraz nasze własne komponenty
 import { useState } from 'react';
-import {StyleSheet, Text, Image, View,Button,TextInput, FlatList,TouchableOpacity  } from 'react-native';
+import { StyleSheet, Text, Image, View, Button, TextInput, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+
+//Importujemy nasz komponent Tytul - został wyciiągnięty z głównej funkcji App do oddzielnego pliku
 import Tytul from './components/Tytul';
-import { DATA } from './DATA';
 
 
+//Główna funkcja aplikacji od niej zaczyna się cała aplikacja
+//W nawiasach kwadratowych podajemy wszystkie komponenty, które chcemy wykorzystać w naszej aplikacji
+//te komponenty nazywamy "hookami"
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState('');
   const [courseGoals, setCourseGoals] = useState([]);
 
-  const Item = ({ title }) => (
-    <TouchableOpacity>
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-    </TouchableOpacity>
-  );
 
-  const renderItem = ({ item }) => (
-    <Item title={item.title} />
-  );
-  
+  //Funkcja, która będzie wywoływana przy każdej zmianie tekstu w TextInput
+  //W parametrze text znajduje się aktualny tekst wpisany w TextInput
+  //Funkcja ta ustawia stan enteredGoal na aktualny tekst wpisany w TextInput
   const textHandler = (text) => {
     setEnteredGoal(text);
   }
 
-  const addGoal = () => {
-    setCourseGoals([...courseGoals,enteredGoal]) ;
+  //Funkcja, która będzie wywoływana przy kliknięciu przycisku "Dodaj"
+  //Funkcja ta dodaje do listy celów nowy cel
+  //Funkcja po zajęciach została zmodyfikowana tak, aby dodawała równiż do każdego celu 
+  //unikalny identyfikator
+  function addGoal() {
+    setCourseGoals((aktualneCele) =>
+      [...courseGoals, { text: enteredGoal, id: Math.random().toString() }
+      ]);
   };
   return (
+    //Wewnątrz głównej funkcji App znajduje się cała logika naszej aplikacji
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie hooki, które zostały zadeklarowane w nawiasach kwadratowych
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie komponenty z biblioteki React Native
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie nasze własne komponenty
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie funkcje, które zostały zadeklarowane wewnątrz funkcji App
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie zmienne, które zostały zadeklarowane wewnątrz funkcji App
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie stałe, które zostały zadeklarowane wewnątrz funkcji App
+    //Wewnątrz funkcji App możemy wykorzystywać wszystkie obiekty, które zostały zadeklarowane wewnątrz funkcji App
+    //Stylowanie komponentów odbywa się za pomocą obiektu styles
+    //W obiekcie styles definiujemy wszystkie style, które chcemy wykorzystać w naszej aplikacji
     <View style={styles.container}>
       <Tytul />
-      <View>      
+
+      {/* Komponent Image służy do wyświetlania obrazków ustawionych na stałe i pobieranych z zewnętrznych źródeł
+      W atrybucie source podajemy ścieżkę do obrazka */}
+      <View>
         <Image
-        style={styles.tinyLogo}
-        source={require('./assets/sun.png')}
-      />
+          style={styles.tinyLogo}
+          source={require('./assets/sun.png')}
+        />
       </View>
+
+      {/* Komponent TextInput służy do wyświetlania pola tekstowego, 
+      w którym użytkownik może wpisywać tekst */}
       <View style={styles.inputContainer}>
-      <TextInput onChangeText={textHandler} style={styles.input} placeholder="Wpisz cel" />
+        <TextInput onChangeText={textHandler} style={styles.input} placeholder="Wpisz cel" />
       </View>
+
+      {/* Komponent Button służy do wyświetlania przycisku,
+      Uwaga w bieżącym widoku są dwa przyciski, które mają różne funkcje
+      w którym użytkownik może kliknąć i wykonać jakąś akcję */}
       <View style={styles.buttonsContainer}>
         <Button title="Anuluj" />
         <Button onPress={addGoal} title="Dodaj" />
       </View>
-      <View style={styles.inputContainer}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
-      </View>
+
+      {/* Komponent FlatList służy do wyświetlania listy elementów
+      W atrybucie data podajemy tablicę, która zawiera elementy, które mają być wyświetlone
+      W atrybucie renderItem podajemy funkcję, która będzie wywoływana przy każdym elemencie tablicy
+      W atrybucie keyExtractor podajemy funkcję, która będzie wywoływana przy każdym elemencie tablicy
+      aby wygenerować unikalny identyfikator dla każdego elementu tablicy */}
+      <FlatList data={courseGoals}
+        renderItem={(itemData) => {
+          return (
+            <View style={styles.item}>
+              <Text style={styles.textItem}>{itemData.item.text}</Text>
+            </View>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.id;
+        }}
+        alwaysBounceVertical={false} style={styles.inputContainer} />
+
     </View>
   );
 }
+
+// Definicja obiektu styles dla naszej aplikacji
 
 const styles = StyleSheet.create({
   container: {
@@ -85,11 +123,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
-    backgroundColor: 'lightblue',
+    backgroundColor: 'darkblue',
     padding: 15,
     marginVertical: 8,
     marginHorizontal: 6,
     borderRadius: 15,
+    color: 'white',
+  },
+  textItem: {
+    color: 'white',
   },
 });
 
