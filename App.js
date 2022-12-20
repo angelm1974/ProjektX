@@ -1,21 +1,33 @@
 
-import {StyleSheet, Text, Image, View,Button,TextInput, FlatList } from 'react-native';
+import { useState } from 'react';
+import {StyleSheet, Text, Image, View,Button,TextInput, FlatList,TouchableOpacity  } from 'react-native';
 import Tytul from './components/Tytul';
 import { DATA } from './DATA';
 
 
 export default function App() {
-  
+  const [enteredGoal, setEnteredGoal] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+
   const Item = ({ title }) => (
+    <TouchableOpacity>
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
     </View>
+    </TouchableOpacity>
   );
 
   const renderItem = ({ item }) => (
     <Item title={item.title} />
   );
   
+  const textHandler = (text) => {
+    setEnteredGoal(text);
+  }
+
+  const addGoal = () => {
+    setCourseGoals([...courseGoals,enteredGoal]) ;
+  };
   return (
     <View style={styles.container}>
       <Tytul />
@@ -26,11 +38,11 @@ export default function App() {
       />
       </View>
       <View style={styles.inputContainer}>
-      <TextInput style={styles.input} placeholder="Wpisz cel" />
+      <TextInput onChangeText={textHandler} style={styles.input} placeholder="Wpisz cel" />
       </View>
       <View style={styles.buttonsContainer}>
         <Button title="Anuluj" />
-        <Button title="Dodaj" />
+        <Button onPress={addGoal} title="Dodaj" />
       </View>
       <View style={styles.inputContainer}>
       <FlatList
@@ -40,7 +52,6 @@ export default function App() {
       />
       </View>
     </View>
-
   );
 }
 
@@ -81,3 +92,4 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
+
