@@ -1,13 +1,24 @@
 
-import {StyleSheet, Text, Image, View,Button,TextInput  } from 'react-native';
+import {StyleSheet, Text, Image, View,Button,TextInput, FlatList } from 'react-native';
+import Tytul from './components/Tytul';
+import { DATA } from './DATA';
+
 
 export default function App() {
-  return (
+  
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
 
+  const renderItem = ({ item }) => (
+    <Item title={item.title} />
+  );
+  
+  return (
     <View style={styles.container}>
-      <View>
-        <Text>Witaj w aplikacji listy!</Text>
-      </View>
+      <Tytul />
       <View>      
         <Image
         style={styles.tinyLogo}
@@ -15,13 +26,19 @@ export default function App() {
       />
       </View>
       <View style={styles.inputContainer}>
-      <TextInput style={styles.input} placeholder="Wpisz imię" />
+      <TextInput style={styles.input} placeholder="Wpisz cel" />
       </View>
       <View style={styles.buttonsContainer}>
         <Button title="Anuluj" />
         <Button title="Dodaj" />
       </View>
-      
+      <View style={styles.inputContainer}>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+      </View>
     </View>
 
   );
@@ -33,7 +50,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+
+    padding: 20,
   },
   tinyLogo: {
     width: 50,
@@ -51,6 +69,15 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderWidth: 1,
+    borderColor: 'darkblue',
+    borderRadius: 15,
     padding: 10,
+  },
+  item: {
+    backgroundColor: 'lightblue',
+    padding: 15,
+    marginVertical: 8,
+    marginHorizontal: 6,
+    borderRadius: 15,
   },
 });
