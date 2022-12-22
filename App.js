@@ -1,7 +1,7 @@
 //Sekcja importów
 //Importujemy biblioteki Reacta, komponenty z biblioteki React Native oraz nasze własne komponenty
 import { useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList,Button } from 'react-native';
 import GoalItem from './components/GoalItem';
 
 //Importujemy nasz komponent Tytul - został wyciiągnięty z głównej funkcji App do oddzielnego pliku
@@ -15,6 +15,7 @@ import GoalInput from './components/GoalInput';
 export default function App() {
 
 const [courseGoals, setCourseGoals] = useState([]);
+const [modalIsVisible, setModalIsVisible] = useState(false);
 
 function deleteGoalHandler(id) {
   setCourseGoals((aktualneCele) => {
@@ -23,8 +24,13 @@ function deleteGoalHandler(id) {
   console.log('Kasujemy');
 }
 
+function startAddGoalHandler() {
+  setModalIsVisible(true);
+};
 
-
+function endAddGoalHandler() {
+  setModalIsVisible(false);
+};
   //Funkcja, która będzie wywoływana przy kliknięciu przycisku "Dodaj"
   //Funkcja ta dodaje do listy celów nowy cel
   //Funkcja po zajęciach została zmodyfikowana tak, aby dodawała równiż do każdego celu 
@@ -33,6 +39,7 @@ function deleteGoalHandler(id) {
     setCourseGoals((aktualneCele) =>
       [...aktualneCele, { text: enteredGoal, id: Math.random().toString() }
       ]);
+      endAddGoalHandler();
   };
   return (
     //Wewnątrz głównej funkcji App znajduje się cała logika naszej aplikacji
@@ -48,7 +55,12 @@ function deleteGoalHandler(id) {
     <View style={styles.container}>
       <Tytul />
       <Logo />
-      <GoalInput onAddGoal={addGoal} />
+      <Button title="Dodaj nowy cel" onPress={startAddGoalHandler} />
+      <GoalInput  
+        visible={modalIsVisible} 
+        onAddGoal={addGoal} 
+        onCancel={endAddGoalHandler}
+      />
 
 
       {/* Komponent FlatList służy do wyświetlania listy elementów
