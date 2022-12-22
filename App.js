@@ -16,7 +16,12 @@ export default function App() {
 
 const [courseGoals, setCourseGoals] = useState([]);
 
-
+function deleteGoalHandler(id) {
+  setCourseGoals((aktualneCele) => {
+    return aktualneCele.filter((cel) => cel.id !== id);
+  });
+  console.log('Kasujemy');
+}
 
 
 
@@ -55,7 +60,10 @@ const [courseGoals, setCourseGoals] = useState([]);
       <FlatList data={courseGoals}
         renderItem={(itemData) => {
           return (
-            <GoalItem text={itemData.item.text} />
+            <GoalItem 
+              text={itemData.item.text} 
+              id={itemData.item.id}
+              onDeleteItem={deleteGoalHandler}/>
           );
         }}
         keyExtractor={(item, index) => {
@@ -74,6 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 20,
+    marginTop: 20,
   },
   GoalsContainer: {
     marginTop: 20,
