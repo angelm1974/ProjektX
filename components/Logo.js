@@ -6,7 +6,7 @@ W atrybucie source podajemy ścieżkę do obrazka */
 
 export default function Logo() {
         return (
-            <View>
+            <View style={styles.container}>
                 <Image
                     style={styles.tinyLogo}
                     source={require('./../assets/sun.png')}
@@ -17,8 +17,15 @@ export default function Logo() {
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+       
+    },
     tinyLogo: {
         width: 50,
         height: 50,
     },
 });
+ 

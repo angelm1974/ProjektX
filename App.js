@@ -55,7 +55,10 @@ function endAddGoalHandler() {
     <View style={styles.container}>
       <Tytul />
       <Logo />
-      <Button title="Dodaj nowy cel" onPress={startAddGoalHandler} />
+      <Button 
+        title="Dodaj nowy cel" 
+        onPress={startAddGoalHandler} 
+      />
       <GoalInput  
         visible={modalIsVisible} 
         onAddGoal={addGoal} 

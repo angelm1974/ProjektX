@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet,Modal } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet,Modal,Image } from 'react-native'
 import React, { useState } from 'react'
 
 const GoalInput = (props) => {
@@ -20,13 +20,14 @@ const GoalInput = (props) => {
 
   return (
     <Modal visible={props.visible} animationType="slide">
-    <View>
+    <View style={styles.Container}>
+      <Image source={require('./../assets/cel.png')} style={{width: 80, height: 80, alignSelf: 'center', marginBottom: 50}} />
       <View style={styles.inputContainer}>
         <TextInput onChangeText={textHandler} style={styles.input} placeholder="Wpisz cel" />
       </View>  
-      <View>
-        <Button onPress={props.onCancel} title="Anuluj" />
-        <Button onPress={addGoalHandler} title="Dodaj" />
+      <View style={styles.ButtonsContainer}>
+        <Button color='darkblue' onPress={props.onCancel} title="Anuluj" />
+        <Button color='darkblue' onPress={addGoalHandler} title="Dodaj" />
       </View>
     </View>
 </Modal>
@@ -36,25 +37,40 @@ const GoalInput = (props) => {
 export default GoalInput
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  Container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
+    paddingTop: 50,
+    backgroundColor: 'darkviolet',
 
-    paddingTop: 30,
-
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    width: '100%',
+    width: '80%',
     padding: 8,
     borderRadius: 10,
     marginRight: 8,
     height: 40,
+    color: 'white',
   },
-
-
+  ButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    width: '60%',
+    paddingTop: 30,
+  },
+  btnStyle: {
+    width: 260,
+    borderRadius: 10,
+    
+  },
 });
