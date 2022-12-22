@@ -1,12 +1,12 @@
-// Description: Main file of the application
 //Sekcja importów
 //Importujemy biblioteki Reacta, komponenty z biblioteki React Native oraz nasze własne komponenty
 import { useState } from 'react';
 import { StyleSheet, Text, Image, View, Button, TextInput, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+import GoalItem from './components/GoalItem';
 
 //Importujemy nasz komponent Tytul - został wyciiągnięty z głównej funkcji App do oddzielnego pliku
 import Tytul from './components/Tytul';
-
+import Logo from './components/Logo';
 
 //Główna funkcja aplikacji od niej zaczyna się cała aplikacja
 //W nawiasach kwadratowych podajemy wszystkie komponenty, które chcemy wykorzystać w naszej aplikacji
@@ -45,15 +45,7 @@ export default function App() {
     //W obiekcie styles definiujemy wszystkie style, które chcemy wykorzystać w naszej aplikacji
     <View style={styles.container}>
       <Tytul />
-
-      {/* Komponent Image służy do wyświetlania obrazków ustawionych na stałe i pobieranych z zewnętrznych źródeł
-      W atrybucie source podajemy ścieżkę do obrazka */}
-      <View>
-        <Image
-          style={styles.tinyLogo}
-          source={require('./assets/sun.png')}
-        />
-      </View>
+      <Logo />
 
       {/* Komponent TextInput służy do wyświetlania pola tekstowego, 
       w którym użytkownik może wpisywać tekst */}
@@ -77,9 +69,7 @@ export default function App() {
       <FlatList data={courseGoals}
         renderItem={(itemData) => {
           return (
-            <View style={styles.item}>
-              <Text style={styles.textItem}>{itemData.item.text}</Text>
-            </View>
+            <GoalItem />
           );
         }}
         keyExtractor={(item, index) => {
@@ -122,16 +112,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
   },
-  item: {
-    backgroundColor: 'darkblue',
-    padding: 15,
-    marginVertical: 8,
-    marginHorizontal: 6,
-    borderRadius: 15,
-    color: 'white',
-  },
-  textItem: {
-    color: 'white',
-  },
+
 });
 
